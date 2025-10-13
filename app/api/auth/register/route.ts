@@ -22,8 +22,8 @@ const registerSchema = z
 
 export async function POST(req: NextRequest) {
   try {
-    const body = validate(registerSchema, await req.json())
-    
+    const body = validate(registerSchema, await req.json());
+
     const existingUser = await prisma.user.findUnique({
       where: { email: body.email },
     });
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "User registered successfully",
+        message: "User registered and signed in successfully",
         user: {
           id: user.id,
           name: user.name,

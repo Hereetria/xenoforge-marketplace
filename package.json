@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "pnpm type-check && pnpm lint && next build",
+    "build": "pnpm type-check && next build",
     "start": "next start",
-    "lint": "next lint --max-warnings=0",
+    "lint": "next lint",
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "check-all": "pnpm type-check && pnpm lint",

@@ -1,4 +1,4 @@
-import { type NextAuthOptions } from "next-auth";
+import NextAuth, { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import { compare } from "bcryptjs"
@@ -74,3 +74,7 @@ export const authOptions: NextAuthOptions = {
 
   secret: getEnvVar("NEXTAUTH_SECRET"),
 };
+
+export const { handlers: authHandlers, auth: authMiddleware } = NextAuth(authOptions);
+
+export const getAuthSession = () => getServerSession(authOptions);

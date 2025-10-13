@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import axios from "axios";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { signIn } from "next-auth/react";
 
 const signupSchema = z
   .object({
@@ -59,7 +58,6 @@ const signupSchema = z
 type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupForm() {
-  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
   const form = useForm<SignupFormData>({
@@ -84,12 +82,8 @@ export default function SignupForm() {
     try {
       console.log("Signup data:", data);
 
-      // First check if we're being rate limited
       try {
-        const testResponse = await fetch("/api/auth/csrf", {
-          method: "GET",
-        });
-
+        const testResponse = await fetch("/api/auth/csrf", { method: "GET" });
         if (testResponse.status === 429) {
           form.setError("root", {
             type: "manual",
@@ -97,9 +91,7 @@ export default function SignupForm() {
           });
           return;
         }
-      } catch {
-        // If test request fails, continue with normal signup
-      }
+      } catch {}
 
       const response = await axios.post("/api/auth/register", {
         firstName: data.firstName,
@@ -111,32 +103,12 @@ export default function SignupForm() {
 
       console.log("Registration successful:", response.data);
 
-      const signInResult = await signIn("credentials", {
+      await signIn("credentials", {
         email: data.email,
         password: data.password,
-        redirect: false,
+        redirect: true,
+        callbackUrl: "/",
       });
-
-      if (signInResult?.error) {
-        console.error("Auto-login failed:", signInResult.error);
-
-        form.reset();
-        window.location.href =
-          "/auth/login?message=Registration successful! Please log in.";
-        return;
-      }
-
-      if (signInResult?.ok) {
-        console.log("Auto-login successful");
-        form.reset();
-
-        router.push("/");
-        return;
-      }
-
-      form.reset();
-      window.location.href =
-        "/auth/login?message=Registration successful! Please log in.";
     } catch (error) {
       console.error("Signup error:", error);
 
@@ -161,21 +133,10 @@ export default function SignupForm() {
           errorMessage = apiError;
         }
       } else if (error instanceof Error) {
-        if (
-          error.message.includes("Too Many Requests") ||
-          error.message.includes("rate limit")
-        ) {
-          errorMessage =
-            "Too many signup attempts. Please wait a moment and try again.";
-        } else {
-          errorMessage = error.message;
-        }
+        errorMessage = error.message;
       }
 
-      form.setError("root", {
-        type: "manual",
-        message: errorMessage,
-      });
+      form.setError("root", { type: "manual", message: errorMessage });
     }
   };
 
