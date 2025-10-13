@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { handleError } from "@/lib/errors/errorHandler";
 import prisma from "@/lib/prisma";
+import { CategoryWithCount } from "@/types/api";
 
 export async function GET(req: NextRequest) {
   try {
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const transformedCategories = categories.map((cat: typeof categories[0]) => ({
+    const transformedCategories: CategoryWithCount[] = categories.map((cat) => ({
       id: cat.id,
       name: cat.name,
       slug: cat.slug,

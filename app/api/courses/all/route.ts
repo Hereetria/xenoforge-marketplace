@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { handleError } from "@/lib/errors/errorHandler";
 import prisma from "@/lib/prisma";
+import { CourseWithEnrollment } from "@/types/api";
 
 export async function GET(req: NextRequest) {
   try {
@@ -73,7 +74,7 @@ export async function GET(req: NextRequest) {
     });
 
     // Transform the data to include enrollment status
-    const coursesWithEnrollmentStatus = courses.map((course) => ({
+    const coursesWithEnrollmentStatus: CourseWithEnrollment[] = courses.map((course) => ({
       ...course,
       isEnrolled: course.enrollments.length > 0,
       enrollmentId: course.enrollments[0]?.id || null,

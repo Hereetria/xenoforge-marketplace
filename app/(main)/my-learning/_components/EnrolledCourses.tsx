@@ -9,6 +9,7 @@ import EnrolledCourseDetailsDialog from "./EnrolledCourseDetailsDialog";
 import LearningProgressDialog from "./LearningProgressDialog";
 import CourseRatingDialog from "./CourseRatingDialog";
 import { useLearningStats } from "@/contexts/LearningStatsContext";
+// import { EnrolledCourse } from "@/types/api";
 
 const getLevelDisplay = (level: string): string => {
   switch (level) {
@@ -78,7 +79,6 @@ export default function EnrolledCourses() {
                   averageRating: number;
                   studentCount: number;
                 };
-                [key: string]: unknown;
               }) => {
                 try {
                   const reviewResponse = await fetch(
