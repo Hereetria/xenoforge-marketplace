@@ -32,6 +32,7 @@ export interface OrderItem {
   thumbnail: string;
   duration: string;
   level: string;
+  [key: string]: unknown;
 }
 
 interface OrderSummaryProps {

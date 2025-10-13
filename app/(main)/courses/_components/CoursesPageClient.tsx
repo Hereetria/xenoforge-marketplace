@@ -111,23 +111,49 @@ export default function CoursesPageClient({ searchParams }: CoursesPageClientPro
 
         const filteredCourses = coursesData.courses || [];
 
-        const transformedCourses = filteredCourses.map((course: any) => {
-          return {
-            id: course.id,
-            title: course.title,
-            instructor: course.instructor?.name || "Unknown Instructor",
-            rating: course.averageRating || 0,
-            students: course.studentCount || 0,
-
-            price: course.price,
-            originalPrice: course.originalPrice || course.price,
-            thumbnail: course.thumbnail || "/api/placeholder/300/200",
-            duration: `${Math.round(course.duration / 60)} hours`,
-            level: course.level,
-            category: course.category?.name || "General",
-            description: course.description || "",
+        const transformedCourses = filteredCourses.map(
+          (course: {
+            id: string;
+            title: string;
+            description: string;
+            price: number;
+            originalPrice?: number;
+            thumbnail?: string;
+            instructor: {
+            name: string;
           };
-        });
+            averageRating: number;
+            studentCount: number;
+            level: string;
+            duration: number;
+            language: string;
+            isPublished: boolean;
+            isFeatured: boolean;
+            createdAt: string;
+            updatedAt: string;
+            category?: {
+              id: string;
+              name: string;
+              slug: string;
+            };
+          }) => {
+            return {
+              id: course.id,
+              title: course.title,
+              instructor: course.instructor?.name || "Unknown Instructor",
+              rating: course.averageRating || 0,
+              students: course.studentCount || 0,
+
+              price: course.price,
+              originalPrice: course.originalPrice || course.price,
+              thumbnail: course.thumbnail || "/api/placeholder/300/200",
+              duration: `${Math.round(course.duration / 60)} hours`,
+              level: course.level,
+              category: course.category?.name || "General",
+              description: course.description || "",
+            };
+          }
+        );
 
         setAllCourses(transformedCourses);
       } catch (error) {

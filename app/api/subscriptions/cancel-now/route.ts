@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
           const stripe = getStripe();
           await stripe.subscriptions.cancel(payment.stripeSubscriptionId);
           console.log("Stripe subscription cancelled immediately:", payment.stripeSubscriptionId);
-        } catch (stripeError: any) {
+        } catch (stripeError: unknown) {
           console.error("Stripe cancellation error:", stripeError);
           // Continue with database update even if Stripe fails
         }

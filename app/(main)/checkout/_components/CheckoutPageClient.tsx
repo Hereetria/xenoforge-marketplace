@@ -24,7 +24,7 @@ interface CartItem {
   originalPrice?: number;
   thumbnail: string;
   instructor: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface StripeCheckoutRequest {

@@ -31,7 +31,24 @@ export async function GET(request: NextRequest) {
     });
 
     // Calculate average rating for each course
-    const coursesWithStats = courses.map((course: { reviews: { rating: number }[]; [key: string]: any }) => {
+    const coursesWithStats = courses.map((course: { 
+      id: string;
+      title: string;
+      description: string;
+      price: number;
+      originalPrice?: number | null;
+      thumbnail?: string | null;
+      level: string;
+      language: string;
+      duration: number;
+      isPublished: boolean;
+      isFeatured: boolean;
+      createdAt: Date;
+      updatedAt: Date;
+      reviews: { rating: number }[];
+      enrollments: { id: string }[];
+      [key: string]: unknown;
+    }) => {
       const avgRating = course.reviews.length > 0 
         ? course.reviews.reduce((sum: number, review: { rating: number }) => sum + review.rating, 0) / course.reviews.length
         : 0;

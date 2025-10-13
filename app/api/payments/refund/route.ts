@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
           const refund = await stripe.refunds.create({
             payment_intent: paymentIntentId,
             amount: Math.round(amount * 100), 
-            reason: reason as any,
+            reason: reason as "duplicate" | "fraudulent" | "requested_by_customer",
           });
           
           refundResult = {
@@ -35,10 +35,10 @@ export async function POST(req: NextRequest) {
             currency: refund.currency,
           };
           
-        } catch (stripeError: any) {
+        } catch (stripeError: unknown) {
           console.error("Stripe refund error:", stripeError);
           return NextResponse.json(
-            { error: `Stripe refund failed: ${stripeError.message}` },
+            { error: `Stripe refund failed: ${stripeError instanceof Error ? stripeError.message : 'Unknown error'}` },
             { status: 400 }
           );
         }
@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
               cancel_at_period_end: true,
             });
 
-          } catch (stripeError: any) {
+          } catch (stripeError: unknown) {
             console.error("Stripe subscription cancellation error:", stripeError);
           }
         }
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
               cancelAtPeriodEnd: true,
             },
           });
-        } catch (dbError: any) {
+        } catch (dbError: unknown) {
           console.error("Database subscription update error:", dbError);
         }
       }

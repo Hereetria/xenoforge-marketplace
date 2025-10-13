@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
 
   if (pathname.startsWith('/api/')) {
     let limit = 100;
-    let window = { amount: 1, unit: "m" as const };
+    const window = { amount: 1, unit: "m" as const };
     
     if (pathname.startsWith('/api/auth/')) {
       limit = 20;

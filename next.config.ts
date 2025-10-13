@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
 
 // Enable Turbopack only in development mode
 if (process.env.NODE_ENV === "development") {
-  (nextConfig as any).experimental = { turbopack: true };
+  (nextConfig as { experimental?: { turbopack?: boolean } }).experimental = { turbopack: true };
 }
 
 export default nextConfig;

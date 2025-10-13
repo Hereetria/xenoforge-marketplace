@@ -60,7 +60,26 @@ export default function EnrolledCourses() {
 
           const enrollmentsWithRatingStatus = await Promise.all(
             enrollments.map(
-              async (enrollment: { courseId: string; [key: string]: any }) => {
+              async (enrollment: {
+                courseId: string;
+                progress: number;
+                lastAccessedAt?: string;
+                completedAt?: string;
+                course: {
+                  id: string;
+                  title: string;
+                  description: string;
+                  thumbnail?: string;
+                  instructor: string;
+                  price: number;
+                  duration: number;
+                  level: string;
+                  language: string;
+                  averageRating: number;
+                  studentCount: number;
+                };
+                [key: string]: unknown;
+              }) => {
                 try {
                   const reviewResponse = await fetch(
                     `/api/courses/${enrollment.courseId}/reviews`

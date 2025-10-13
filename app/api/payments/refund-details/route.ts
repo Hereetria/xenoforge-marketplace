@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
         createdAt: new Date(refund.created * 1000).toISOString(),
         paymentIntentId: refund.payment_intent as string,
       });
-    } catch (stripeError: any) {
+    } catch (stripeError: unknown) {
       console.error("Stripe error:", stripeError);
       return NextResponse.json(
         { error: "Failed to retrieve refund details from Stripe" },
