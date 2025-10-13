@@ -1,0 +1,47 @@
+import { NextRequest, NextResponse } from "next/server";
+import { handleError } from "@/lib/errors/errorHandler";
+import prisma from "@/lib/prisma";
+
+export async function GET(req: NextRequest) {
+  try {
+    const categories = await prisma.category.findMany({
+      where: {
+        isActive: true,
+      },
+      include: {
+        _count: {
+          select: {
+            courses: {
+              where: {
+                isPublished: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    const transformedCategories = categories.map((cat: typeof categories[0]) => ({
+      id: cat.id,
+      name: cat.name,
+      slug: cat.slug,
+      description: cat.description,
+      icon: cat.icon,
+      color: cat.color,
+      _count: {
+        courses: cat._count.courses,
+      },
+    }));
+
+    return NextResponse.json(
+      { categories: transformedCategories },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Categories API error:", error);
+    return handleError(error);
+  }
+}

@@ -1,0 +1,265 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String        @id @default(cuid())
+  name             String?
+  email            String        @unique
+  passwordHash     String
+  role             Role          @default(USER)
+  stripeCustomerId String?
+  avatar           String?
+  bio              String?
+  website          String?
+  location         String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  certificates     Certificate[]
+  createdCourses   Course[]      @relation("CourseInstructor")
+  enrollments      Enrollment[]
+  offers           Offer[]       @relation("SellerOffers")
+  payments         Payment[]
+  reviews          Review[]
+  wishlist         Wishlist[]
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  icon        String?
+  color       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  courses     Course[]
+}
+
+model Course {
+  id               String        @id @default(cuid())
+  title            String
+  description      String
+  shortDescription String?
+  thumbnail        String?
+  previewVideo     String?
+  price            Float
+  originalPrice    Float?
+  level            CourseLevel
+  language         String        @default("English")
+  duration         Int
+  isPublished      Boolean       @default(false)
+  isFeatured       Boolean       @default(false)
+  instructorId     String
+  categoryId       String?
+  tags             String[]
+  requirements     String[]
+  learningGoals    String[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  certificates     Certificate[]
+  category         Category?     @relation(fields: [categoryId], references: [id])
+  instructor       User          @relation("CourseInstructor", fields: [instructorId], references: [id])
+  enrollments      Enrollment[]
+  modules          Module[]
+  payments         Payment[]
+  reviews          Review[]
+  wishlist         Wishlist[]
+}
+
+model Module {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  order       Int
+  courseId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lessons     Lesson[]
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Lesson {
+  id          String             @id @default(cuid())
+  title       String
+  description String?
+  content     String?
+  type        LessonType
+  duration    Int
+  order       Int
+  isPreview   Boolean            @default(false)
+  moduleId    String
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  module      Module             @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  completions LessonCompletion[]
+}
+
+model Enrollment {
+  id                String             @id @default(cuid())
+  userId            String
+  courseId          String
+  progress          Float              @default(0)
+  lastAccessedAt    DateTime?
+  completedAt       DateTime?
+  paymentId         String?            @unique
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  course            Course             @relation(fields: [courseId], references: [id])
+  payment           Payment?           @relation(fields: [paymentId], references: [id])
+  user              User               @relation(fields: [userId], references: [id])
+  lessonCompletions LessonCompletion[]
+
+  @@unique([userId, courseId])
+}
+
+model LessonCompletion {
+  id           String     @id @default(cuid())
+  enrollmentId String
+  lessonId     String
+  completedAt  DateTime   @default(now())
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  lesson       Lesson     @relation(fields: [lessonId], references: [id])
+
+  @@unique([enrollmentId, lessonId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId])
+}
+
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId])
+}
+
+model Certificate {
+  id             String   @id @default(cuid())
+  userId         String
+  courseId       String
+  issuedAt       DateTime @default(now())
+  certificateUrl String?
+  course         Course   @relation(fields: [courseId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+model Payment {
+  id                   String          @id @default(cuid())
+  provider             PaymentProvider
+  status               PaymentStatus   @default(PENDING)
+  amount               Float
+  currency             String          @default("USD")
+  courseId             String?
+  offerId              String?
+  buyerId              String
+  stripePaymentIntentId String?
+  stripeSubscriptionId String?
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  enrollment           Enrollment?
+  buyer                User            @relation(fields: [buyerId], references: [id])
+  course               Course?         @relation(fields: [courseId], references: [id])
+  offer                Offer?          @relation(fields: [offerId], references: [id])
+  subscription         Subscription?
+}
+
+model Subscription {
+  id                 String   @id @default(cuid())
+  paymentId          String   @unique
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  active             Boolean  @default(true)
+  cancelAtPeriodEnd  Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  payment            Payment  @relation(fields: [paymentId], references: [id])
+}
+
+model Offer {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String?
+  price       Float
+  quantity    Int?
+  type        OfferType
+  sellerId    String
+  createdAt   DateTime  @default(now())
+  seller      User      @relation("SellerOffers", fields: [sellerId], references: [id])
+  payments    Payment[]
+}
+
+model WebhookLog {
+  id        String   @id @default(cuid())
+  provider  String
+  event     String
+  payload   Json
+  createdAt DateTime @default(now())
+}
+
+model Coupon {
+  id                 String   @id @default(cuid())
+  code               String   @unique
+  discountPercentage Int
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum CourseLevel {
+  BEGINNER
+  INTERMEDIATE
+  EXPERT
+}
+
+enum LessonType {
+  VIDEO
+  TEXT
+  QUIZ
+  ASSIGNMENT
+  RESOURCE
+}
+
+enum PaymentProvider {
+  STRIPE
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum OfferType {
+  ONE_TIME
+  SUBSCRIPTION
+}
