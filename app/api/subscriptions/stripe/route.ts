@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/constants/roles";
 import prisma from "@/lib/prisma";
 import { getEnvVar } from "@/lib/getEnvVar";
 import { getStripe } from "@/lib/stripe";

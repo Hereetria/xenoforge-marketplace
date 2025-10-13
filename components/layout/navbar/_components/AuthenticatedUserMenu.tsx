@@ -2,7 +2,7 @@
 
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/constants/roles";
 import { ShoppingCart, Crown, BookOpen } from "lucide-react";
 import UserAvatar from "./UserAvatar";
 import UserInfo from "./UserInfo";

@@ -5,7 +5,7 @@ import { notFoundError, forbiddenError } from "@/lib/errors/httpErrors";
 import prisma from "@/lib/prisma";
 import { requireParam } from "@/lib/requireParam";
 import { RouteContext } from "@/types/routeTypes";
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/constants/roles";
 import { requireRole } from "@/lib/auth/requireRole";
 
 export async function POST(req: NextRequest, context: RouteContext) {

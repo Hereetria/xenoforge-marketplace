@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { handleError } from "@/lib/errors/errorHandler";
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/constants/roles";
 import { logError, logInfo } from "@/lib/logger";
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { requireRole } from "@/lib/auth/requireRole";

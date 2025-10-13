@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/constants/roles";
 
 interface UserInfoProps {
   name?: string | null;

@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { validate } from "@/lib/validation/validate";
 import { handleError } from "@/lib/errors/errorHandler";
 import { badRequestError } from "@/lib/errors/httpErrors";
+import { Role, fromPrismaRole } from "@/lib/constants/roles";
 
 const registerSchema = z
   .object({
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
           id: user.id,
           name: user.name,
           email: user.email,
-          role: user.role,
+          role: fromPrismaRole(user.role),
         },
       },
       { status: 201 }

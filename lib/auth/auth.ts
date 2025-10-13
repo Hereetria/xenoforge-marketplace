@@ -4,7 +4,7 @@ import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import prisma from "@/lib/prisma";
 import { compare } from "bcryptjs"
-import { Role } from "@prisma/client";
+import { Role, fromPrismaRole } from "@/lib/constants/roles";
 import { getEnvVar } from "@/lib/getEnvVar";
 
 export const authOptions: NextAuthOptions = {
@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
-          role: user.role,
+          role: fromPrismaRole(user.role),
           stripeCustomerId: user.stripeCustomerId,
         }
       },
@@ -70,8 +70,7 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async signIn({ user, account, profile, email, credentials }) {
-      // Always return true to prevent NextAuth from redirecting to error page
-      // Let the form handle all error display
+
       return true
     },
   },

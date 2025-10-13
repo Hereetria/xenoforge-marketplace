@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { getEnvVar } from "@/lib/getEnvVar";
 import { getStripe } from "@/lib/stripe";
 import { handleError } from "@/lib/errors/errorHandler";
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/constants/roles";
 import { logError, logInfo } from "@/lib/logger";
 import { notFoundError } from "@/lib/errors/httpErrors";
 import { requireAuth } from "@/lib/auth/requireAuth";
