@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
         ? couponDiscountPercentage 
         : (isDiscountEnabled() ? DISCOUNT_PERCENTAGE : 0)
 
-    const lineItems = courses.map(course => {
+    const lineItems = courses.map((course: any) => {
       const basePrice = course.price
       const effectivePrice = Math.round(basePrice * (1 - effectiveDiscountPercentage / 100) * 100) / 100
       const unitAmountCents = Math.round(effectivePrice * 100)
@@ -134,7 +134,7 @@ export async function POST(req: NextRequest) {
         success_url: successUrl,
         cancel_url: cancelUrl,
         metadata: {
-          courseIds: JSON.stringify(courses.map(c => c.id)),
+          courseIds: JSON.stringify(courses.map((c: any) => c.id)),
           buyerId: user.id,
         },
       })      

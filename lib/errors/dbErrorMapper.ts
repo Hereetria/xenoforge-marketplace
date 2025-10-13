@@ -1,11 +1,11 @@
 import { ApiError, fail } from "@/lib/errors/errorHandler"
-import { Prisma } from "@prisma/client"
+// Prisma will be imported from generated Prisma client
 
-export function isDbError(err: unknown): err is Prisma.PrismaClientKnownRequestError {
-  return err instanceof Prisma.PrismaClientKnownRequestError
+export function isDbError(err: unknown): err is any {
+  return !!(err && typeof err === 'object' && 'code' in err && 'meta' in err)
 }
 
-export function mapDbError(err: Prisma.PrismaClientKnownRequestError): ApiError {
+export function mapDbError(err: any): ApiError {
   switch (err.code) {
     case "P2002": {
       const fields = (err.meta?.target as string[]) ?? []

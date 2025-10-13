@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
         where: { userId: user.id },
         select: { courseId: true }
       });
-      enrolledCourseIds = enrollments.map(e => e.courseId);
+      enrolledCourseIds = enrollments.map((e: { courseId: string }) => e.courseId);
     } catch {
       // Ignore enrollment fetch errors
     }
@@ -137,7 +137,7 @@ export async function GET(req: NextRequest) {
     
     let filteredCourses = allCourses;
     if (priceRange) {
-      filteredCourses = allCourses.filter((course) => {
+      filteredCourses = allCourses.filter((course: any) => {
         const priceInfo = getPriceInfo(course.price);
         const actualPrice = priceInfo.discountedPrice;
         
@@ -162,7 +162,7 @@ export async function GET(req: NextRequest) {
     if (sort === "popular") {
       
       filteredCourses = filteredCourses.sort(
-        (a, b) => (b.enrollments?.length || 0) - (a.enrollments?.length || 0)
+        (a: any, b: any) => (b.enrollments?.length || 0) - (a.enrollments?.length || 0)
       );
     } else if (sort === "newest" || !sort) {
       
@@ -179,7 +179,7 @@ export async function GET(req: NextRequest) {
 
     
 
-    const coursesWithStats = courses.map((course) => {
+    const coursesWithStats = courses.map((course: any) => {
       const avgRating = course.reviews.length > 0
         ? course.reviews.reduce((sum: number, review: { rating: number }) => sum + review.rating, 0) / course.reviews.length
         : 0;

@@ -30,7 +30,7 @@ export async function GET() {
     });
 
     const paymentsWithDetails = await Promise.all(
-      payments.map(async (payment) => {
+      payments.map(async (payment: any) => {
         let course = null;
         let subscription = null;
         
@@ -74,7 +74,7 @@ export async function GET() {
     );
 
     // Transform payments for frontend
-    const transformedPayments = paymentsWithDetails.map((payment) => ({
+    const transformedPayments = paymentsWithDetails.map((payment: any) => ({
       id: payment.id,
       amount: payment.amount,
       currency: payment.currency,

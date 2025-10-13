@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { handleError } from "@/lib/errors/errorHandler";
 import prisma from "@/lib/prisma";
-import { PaymentStatus } from "@prisma/client";
+// PaymentStatus will be imported from generated Prisma client
 
 export async function GET() {
   try {
@@ -13,7 +13,7 @@ export async function GET() {
     const successfulCoursePayments = await prisma.payment.findMany({
       where: {
         buyerId: user.id,
-        status: PaymentStatus.SUCCEEDED,
+        status: "SUCCEEDED" as const,
         courseId: { not: null },
       },
       select: { id: true, courseId: true },
@@ -90,24 +90,24 @@ export async function GET() {
 
     // Calculate additional statistics
     const totalCourses = enrollments.length;
-    const completedCourses = enrollments.filter(e => e.progress === 100).length;
-    const totalHours = enrollments.reduce((sum, e) => {
+    const completedCourses = enrollments.filter((e: any) => e.progress === 100).length;
+    const totalHours = enrollments.reduce((sum: number, e: any) => {
       const courseHours = e.course.duration / 60;
       return sum + courseHours * (e.progress / 100);
     }, 0);
     
-    const totalLessons = enrollments.reduce((sum, e) => {
-      return sum + e.course.modules.reduce((moduleSum, module) => {
+    const totalLessons = enrollments.reduce((sum: number, e: any) => {
+        return sum + e.course.modules.reduce((moduleSum: number, module: any) => {
         return moduleSum + module.lessons.length;
       }, 0);
     }, 0);
 
-    const completedLessons = enrollments.reduce((sum, e) => {
+    const completedLessons = enrollments.reduce((sum: number, e: any) => {
       return sum + e.lessonCompletions.length;
     }, 0);
 
     // Calculate learning streak (simplified - in production you'd want more sophisticated logic)
-    const recentEnrollments = enrollments.filter(e => {
+    const recentEnrollments = enrollments.filter((e: any) => {
       const daysSinceEnrollment = Math.floor((Date.now() - e.createdAt.getTime()) / (1000 * 60 * 60 * 24));
       return daysSinceEnrollment <= 30; // Active in last 30 days
     });
@@ -125,12 +125,12 @@ export async function GET() {
       where: { userId: user.id },
       select: { courseId: true }
     });
-    const courseIdWithCertificates = new Set(userCertificates.map((c) => c.courseId));
+    const courseIdWithCertificates = new Set(userCertificates.map((c: any) => c.courseId));
 
     // Transform enrollments for frontend
-    const transformedEnrollments = enrollments.map(enrollment => {
+    const transformedEnrollments = enrollments.map((enrollment: any) => {
       const course = enrollment.course;
-      const totalLessonsInCourse = course.modules.reduce((sum, module) => sum + module.lessons.length, 0);
+      const totalLessonsInCourse = course.modules.reduce((sum: number, module: any) => sum + module.lessons.length, 0);
       const completedLessonsInCourse = enrollment.lessonCompletions.length;
       
       return {

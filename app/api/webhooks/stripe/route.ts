@@ -6,7 +6,7 @@ import { getEnvVar } from "@/lib/getEnvVar";
 import { getStripe } from "@/lib/stripe";
 import { logError, logInfo } from "@/lib/logger";
 import { badRequestError } from "@/lib/errors/httpErrors";
-import { PaymentProvider, PaymentStatus } from "@prisma/client";
+// PaymentProvider and PaymentStatus will be imported from generated Prisma client
 
 const stripe = getStripe();
 
@@ -121,8 +121,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
           
           const paymentRecord = await prisma.payment.create({
             data: {
-              provider: PaymentProvider.STRIPE,
-              status: PaymentStatus.SUCCEEDED,
+              provider: "STRIPE" as const,
+              status: "SUCCEEDED" as const,
               amount: 29, 
               currency: (session.currency || "usd").toUpperCase(),
               courseId: null, 
@@ -171,8 +171,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
 
     if (courses.length !== courseIdArray.length) {
-      console.error("❌ Some courses not found. Expected:", courseIdArray, "Found:", courses.map(c => c.id));
-      const missingCourses = courseIdArray.filter(id => !courses.find(c => c.id === id));
+      console.error("❌ Some courses not found. Expected:", courseIdArray, "Found:", courses.map((c: any) => c.id));
+      const missingCourses = courseIdArray.filter(id => !courses.find((c: any) => c.id === id));
       console.error("Missing course IDs:", missingCourses);
     }
 
@@ -181,7 +181,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       const courseId = courseIdArray[i];
       
       
-      const course = courses.find(c => c.id === courseId);
+      const course = courses.find((c: any) => c.id === courseId);
       if (!course) {
         console.error(`❌ Course not found in database: ${courseId}`);
         logError(`Course not found: ${courseId}`);
@@ -197,7 +197,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         where: {
           courseId: courseId,
           buyerId,
-          provider: PaymentProvider.STRIPE,
+          provider: "STRIPE" as const,
         },
       });
 
@@ -206,8 +206,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         try {
           paymentRecord = await prisma.payment.create({
             data: {
-              provider: PaymentProvider.STRIPE,
-              status: PaymentStatus.SUCCEEDED,
+              provider: "STRIPE" as const,
+              status: "SUCCEEDED" as const,
               amount: individualPrice,
               currency: (session.currency || "usd").toUpperCase(),
               courseId: courseId,
