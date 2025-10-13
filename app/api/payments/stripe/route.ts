@@ -14,7 +14,7 @@ import { isDiscountEnabled, DISCOUNT_PERCENTAGE } from "@/lib/discountUtils"
 
 const stripe = getStripe()
 
-export const CheckoutSchema = z.object({
+const CheckoutSchema = z.object({
   courses: z
     .array(
       z.object({

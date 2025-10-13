@@ -4,6 +4,45 @@ import { handleError } from "@/lib/errors/errorHandler";
 import prisma from "@/lib/prisma";
 import { CourseWithEnrollment } from "@/types/api";
 
+// Prisma'dan gelen course tipini tanımla
+type CourseFromPrisma = {
+  id: string;
+  title: string;
+  description: string;
+  shortDescription: string | null;
+  price: number;
+  thumbnail: string | null;
+  level: string;
+  duration: number;
+  isPublished: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  instructor: {
+    id: string;
+    name: string | null;
+    email: string;
+    avatar: string | null;
+  };
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+    color: string | null;
+  } | null;
+  modules: {
+    id: string;
+    title: string;
+    order: number;
+  }[];
+  enrollments: {
+    id: string;
+    createdAt: Date;
+  }[];
+  _count: {
+    enrollments: number;
+  };
+};
+
 export async function GET() {
   try {
     const { user } = await requireAuth();
@@ -74,7 +113,7 @@ export async function GET() {
     });
 
     // Transform the data to include enrollment status
-    const coursesWithEnrollmentStatus: CourseWithEnrollment[] = courses.map((course) => ({
+    const coursesWithEnrollmentStatus: CourseWithEnrollment[] = courses.map((course: CourseFromPrisma) => ({
       ...course,
       isEnrolled: course.enrollments.length > 0,
       enrollmentId: course.enrollments[0]?.id || null,

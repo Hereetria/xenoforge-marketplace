@@ -12,7 +12,7 @@ import { z } from "zod";
 
 const stripe = getStripe();
 
-export const StripeSubscriptionSchema = z.object({
+const StripeSubscriptionSchema = z.object({
   plan: z.string(),
   price: z.number().min(0),
 });
