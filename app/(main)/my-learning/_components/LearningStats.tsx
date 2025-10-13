@@ -15,7 +15,7 @@ interface LearningStats {
 }
 
 export default function LearningStats() {
-  const { stats, setStats, refreshStats } = useLearningStats();
+  const { stats, refreshStats } = useLearningStats();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

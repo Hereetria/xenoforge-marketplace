@@ -23,31 +23,7 @@ interface Course {
   savings?: number;
 }
 
-interface CoursesResponse {
-  courses: Course[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    pages: number;
-  };
-}
-
-interface CoursesPageClientProps {
-  searchParams: {
-    page?: string;
-    limit?: string;
-    search?: string;
-    category?: string;
-    priceRange?: string;
-    rating?: string;
-    duration?: string;
-    level?: string;
-    sort?: string;
-  };
-}
-
-export default function CoursesPageClient({ searchParams }: CoursesPageClientProps) {
+export default function CoursesPageClient() {
   const clientSearchParams = useSearchParams();
   const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
@@ -73,8 +49,6 @@ export default function CoursesPageClient({ searchParams }: CoursesPageClientPro
     const fetchCourses = async () => {
       try {
         setLoading(true);
-        const page = parseInt(pageParam);
-        const limit = parseInt(limitParam);
 
         const filters = {
           search,
@@ -120,8 +94,8 @@ export default function CoursesPageClient({ searchParams }: CoursesPageClientPro
             originalPrice?: number;
             thumbnail?: string;
             instructor: {
-            name: string;
-          };
+              name: string;
+            };
             averageRating: number;
             studentCount: number;
             level: string;

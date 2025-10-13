@@ -3,7 +3,7 @@ import { requireAuth } from "@/lib/auth/requireAuth";
 import { handleError } from "@/lib/errors/errorHandler";
 import prisma from "@/lib/prisma";
 import { validate } from "@/lib/validation/validate";
-import { courseQuerySchema, createCourseSchema } from "@/lib/validation/schemas";
+import { courseQuerySchema } from "@/lib/validation/schemas";
 import { getPriceInfo } from "@/lib/discountUtils";
 
 export async function GET(req: NextRequest) {
@@ -19,7 +19,6 @@ export async function GET(req: NextRequest) {
       level,
       search,
       priceRange,
-      rating,
       duration,
       sort,
       featured = false,
@@ -182,7 +181,7 @@ export async function GET(req: NextRequest) {
 
     const coursesWithStats = courses.map((course) => {
       const avgRating = course.reviews.length > 0
-        ? course.reviews.reduce((sum, review) => sum + review.rating, 0) / course.reviews.length
+        ? course.reviews.reduce((sum: number, review: { rating: number }) => sum + review.rating, 0) / course.reviews.length
         : 0;
       
       return {

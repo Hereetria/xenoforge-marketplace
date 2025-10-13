@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { handleError } from "@/lib/errors/errorHandler";
 import prisma from "@/lib/prisma";
 import { CourseWithEnrollment } from "@/types/api";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const { user } = await requireAuth();
 

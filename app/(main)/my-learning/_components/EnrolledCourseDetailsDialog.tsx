@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -11,17 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Star,
-  Users,
-  Clock,
-  BookOpen,
-  Award,
-  Play,
-  CheckCircle,
-  X,
-} from "lucide-react";
-import Link from "next/link";
+import { Users, Clock, BookOpen, Award, Play, CheckCircle, X } from "lucide-react";
 
 const getLevelDisplay = (level: string): string => {
   switch (level) {
@@ -71,7 +60,7 @@ export default function EnrolledCourseDetailsDialog({
     } else if (open && detailsId !== course.id) {
       setOpen(false);
     }
-  }, [searchParams, course.id]);
+  }, [searchParams, course.id, open]);
 
   const updateQuery = (key: string, value?: string) => {
     const params = new URLSearchParams(searchParams?.toString());

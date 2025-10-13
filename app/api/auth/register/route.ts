@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import bcrypt, { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { validate } from "@/lib/validation/validate";
 import { handleError } from "@/lib/errors/errorHandler";
 import { badRequestError } from "@/lib/errors/httpErrors";
-import { Role, fromPrismaRole } from "@/lib/constants/roles";
+import { fromPrismaRole } from "@/lib/constants/roles";
 
 const registerSchema = z
   .object({

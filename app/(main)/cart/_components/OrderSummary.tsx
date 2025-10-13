@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { CartItemData } from "./CartItemCard";
-import { isDiscountEnabled, DISCOUNT_PERCENTAGE } from "@/lib/discountUtils";
+import { isDiscountEnabled } from "@/lib/discountUtils";
 import {
   ThemedCard,
   ThemedCardHeader,
@@ -24,7 +24,6 @@ export default function OrderSummary({
   onContinueShopping,
 }: OrderSummaryProps) {
   const discountOn = isDiscountEnabled();
-  const factor = 1 - DISCOUNT_PERCENTAGE / 100;
 
   const { originalSubtotal, subtotal } = items.reduce(
     (acc, item) => {

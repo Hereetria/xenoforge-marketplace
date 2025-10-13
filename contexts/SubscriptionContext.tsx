@@ -65,8 +65,11 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   }, [session, status]);
 
   const refreshSubscription = async () => {
-    setIsLoading(true);
-    await fetchSubscriptionStatus();
+    try {
+      await fetchSubscriptionStatus();
+    } catch (error) {
+      console.error("Failed to refresh subscription:", error);
+    }
   };
 
   return (

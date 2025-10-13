@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
           code: coupon.code
         });
       }
-    } catch (dbError) {
+    } catch {
     }
 
     return NextResponse.json({

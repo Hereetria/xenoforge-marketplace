@@ -8,7 +8,7 @@ import { requireParam } from "@/lib/requireParam";
 import { RouteContext } from "@/types/routeTypes";
 
 export async function POST(
-  req: NextRequest,
+  _req: NextRequest,
   context: RouteContext
 ) {
   try {

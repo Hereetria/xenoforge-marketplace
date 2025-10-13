@@ -7,7 +7,7 @@ interface WishlistButtonProps {
   courseId: number | string;
 }
 
-export default function WishlistButton({ courseId }: WishlistButtonProps) {
+export default function WishlistButton({}: WishlistButtonProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const toggleWishlist = () => {

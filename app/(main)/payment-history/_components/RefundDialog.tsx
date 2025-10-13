@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 interface Payment {
@@ -64,8 +63,6 @@ export default function RefundDialog({
   onClose,
   onRefundSuccess,
 }: RefundDialogProps) {
-  const router = useRouter();
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",

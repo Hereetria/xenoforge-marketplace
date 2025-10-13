@@ -60,13 +60,8 @@ export default function LearningProgressDialog({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [currentProgress, setCurrentProgress] = useState(course.progress);
-  const [hasCertificate, setHasCertificate] = useState(course.isCompleted);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showCertificateAlert, setShowCertificateAlert] = useState(false);
-  const [certificateSaved, setCertificateSaved] = useState(course.isCompleted);
-  const [hasEarnedCertificate, setHasEarnedCertificate] = useState(
-    course.isCompleted
-  );
 
   const [certificateEverEarned, setCertificateEverEarned] = useState(
     course.hasCertificateEver ?? course.isCompleted
@@ -74,15 +69,11 @@ export default function LearningProgressDialog({
 
   useEffect(() => {
     setCurrentProgress(course.progress);
-    setHasCertificate(course.isCompleted);
-    setCertificateSaved(course.isCompleted);
-
-    setHasEarnedCertificate((prev) => prev || course.isCompleted);
 
     setCertificateEverEarned(
       (prev) => prev || !!course.hasCertificateEver || course.isCompleted
     );
-  }, [course.progress, course.isCompleted]);
+  }, [course.progress, course.isCompleted, course.hasCertificateEver]);
 
   useEffect(() => {
     const progressId = searchParams?.get("progress");
@@ -91,7 +82,7 @@ export default function LearningProgressDialog({
     } else if (open && progressId !== course.id) {
       setOpen(false);
     }
-  }, [searchParams, course.id]);
+  }, [searchParams, course.id, open]);
 
   const updateQuery = (key: string, value?: string) => {
     const params = new URLSearchParams(searchParams?.toString());
@@ -108,17 +99,14 @@ export default function LearningProgressDialog({
     setCurrentProgress(newProgress);
 
     if (certificateEverEarned) {
-      setHasCertificate(true);
       setShowCertificateAlert(false);
       return;
     }
 
     if (newProgress >= 100 && !certificateEverEarned) {
       setShowCertificateAlert(true);
-      setHasCertificate(true);
     } else if (newProgress < 100 && !certificateEverEarned) {
       setShowCertificateAlert(false);
-      setHasCertificate(false);
     }
   };
 
@@ -147,8 +135,6 @@ export default function LearningProgressDialog({
 
       if (response.ok) {
         if (currentProgress >= 100) {
-          setCertificateSaved(true);
-          setHasEarnedCertificate(true);
           setCertificateEverEarned(true);
           setShowCertificateAlert(false);
         }

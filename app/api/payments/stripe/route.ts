@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
-import { Course } from "@prisma/client"
 import { Role } from "@/lib/constants/roles"
 import prisma from "@/lib/prisma"
 import { getEnvVar } from "@/lib/getEnvVar"
 import { getStripe } from "@/lib/stripe"
 import { requireAuth } from "@/lib/auth/requireAuth"
 import { requireRole } from "@/lib/auth/requireRole"
-import { badRequestError, notFoundError } from "@/lib/errors/httpErrors"
+import { badRequestError } from "@/lib/errors/httpErrors"
 import { handleError } from "@/lib/errors/errorHandler"
 import { validate } from "@/lib/validation/validate"
 import { z } from "zod"
@@ -89,11 +88,6 @@ export async function POST(req: NextRequest) {
       couponDiscountPercentage, 
       source 
     } = validate(CheckoutSchema, await req.json())
-    console.log("Received request data:", {
-      courses: payloadCourses,
-      couponDiscountPercentage,
-      source
-    })
     const courses = await resolveCourses(user.id, payloadCourses)
 
     if (!courses.length) throw badRequestError("No valid courses provided")

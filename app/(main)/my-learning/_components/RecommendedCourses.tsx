@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { getPriceInfo } from "@/lib/discountUtils";
-import { useSession } from "next-auth/react";
 
 interface ApiCourse {
   id: string;
@@ -17,7 +16,6 @@ interface ApiCourse {
 }
 
 export default function RecommendedCourses() {
-  const { data: session } = useSession();
   const [courses, setCourses] = useState<ApiCourse[]>([]);
   const [loading, setLoading] = useState(true);
 

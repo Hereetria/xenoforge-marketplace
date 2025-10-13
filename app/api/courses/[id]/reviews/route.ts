@@ -2,13 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { handleError } from "@/lib/errors/errorHandler";
 import prisma from "@/lib/prisma";
-import { validate } from "@/lib/validation/validate";
-import { createReviewSchema, updateReviewSchema } from "@/lib/validation/schemas";
 import { requireParam } from "@/lib/requireParam";
 import { RouteContext } from "@/types/routeTypes";
 
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   context: RouteContext
 ) {
   try {

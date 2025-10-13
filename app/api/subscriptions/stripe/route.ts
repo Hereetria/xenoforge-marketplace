@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
 import { Role } from "@/lib/constants/roles";
 import prisma from "@/lib/prisma";
 import { getEnvVar } from "@/lib/getEnvVar";
@@ -52,7 +51,7 @@ export async function POST(req: NextRequest) {
     const { user } = await requireAuth();
     requireRole(user.role, [Role.USER]);
 
-    const { plan, price } = validate(StripeSubscriptionSchema, await req.json());
+    const { plan } = validate(StripeSubscriptionSchema, await req.json());
 
     if (plan !== "premium") {
       throw badRequestError("Invalid subscription plan");

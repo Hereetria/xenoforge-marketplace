@@ -50,7 +50,6 @@ export default function CheckoutPageClient() {
 
   const router = useRouter();
   const { items: cartContextItems, isReady: isCartReady } = useShoppingCart();
-  const SHOW_TAX = false;
 
   const normalizeItem = (item: CartItem): OrderItem => {
     const discountOn = isDiscountEnabled();
@@ -195,7 +194,6 @@ export default function CheckoutPageClient() {
     ? { type: "default" as const, code: "DEFAULT", percentage: DISCOUNT_PERCENTAGE }
     : null;
 
-  const taxAmount = 0;
   const totalPrice = subtotal;
 
   return (
@@ -207,11 +205,9 @@ export default function CheckoutPageClient() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <OrderSummary
             items={checkoutItems}
-            subtotal={subtotal}
             originalSubtotal={originalSubtotal}
             discountAmount={discountAmount}
             discountInfo={discountInfo}
-            taxAmount={taxAmount}
             totalPrice={totalPrice}
             appliedCoupon={appliedCoupon}
             onCouponApplied={setAppliedCoupon}

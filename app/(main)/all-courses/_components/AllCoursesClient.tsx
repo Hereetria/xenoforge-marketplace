@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { BookOpen, Clock, Users, Play, CheckCircle, Crown } from "lucide-react";
@@ -61,18 +61,7 @@ export default function AllCoursesClient() {
     useSubscription();
   const router = useRouter();
 
-  useEffect(() => {
-    if (session?.user && !subscriptionLoading) {
-      if (!hasActiveSubscription) {
-        router.push("/");
-        toast.error("Premium subscription required to access all courses");
-        return;
-      }
-      fetchCourses();
-    }
-  }, [session, hasActiveSubscription, subscriptionLoading, router]);
-
-  const fetchCourses = async () => {
+  const fetchCourses = useCallback(async () => {
     try {
       const response = await fetch("/api/courses/all");
       if (response.ok) {
@@ -89,7 +78,18 @@ export default function AllCoursesClient() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [coursesPerPage]);
+
+  useEffect(() => {
+    if (session?.user && !subscriptionLoading) {
+      if (!hasActiveSubscription) {
+        router.push("/");
+        toast.error("Premium subscription required to access all courses");
+        return;
+      }
+      fetchCourses();
+    }
+  }, [session, hasActiveSubscription, subscriptionLoading, router, fetchCourses]);
 
   const updateDisplayedCourses = (coursesList: Course[], page: number) => {
     const startIndex = (page - 1) * coursesPerPage;

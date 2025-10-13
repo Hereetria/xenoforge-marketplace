@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { handleError } from "@/lib/errors/errorHandler";
-import { notFoundError, forbiddenError } from "@/lib/errors/httpErrors";
+import { notFoundError } from "@/lib/errors/httpErrors";
 import prisma from "@/lib/prisma";
 import { requireParam } from "@/lib/requireParam";
 import { RouteContext } from "@/types/routeTypes";

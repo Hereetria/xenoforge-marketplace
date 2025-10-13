@@ -1,14 +1,16 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CreditCard, Loader2, Shield, CheckCircle } from "lucide-react";
+import { CreditCard, Shield, CheckCircle, ArrowLeft } from "lucide-react";
 
 interface StripeSubscriptionFormProps {
+  amount: number;
   isProcessing: boolean;
   onBack: () => void;
   onSubscription: () => void;
 }
 
 export default function StripeSubscriptionForm({
+  amount,
   isProcessing,
   onBack,
   onSubscription,
@@ -116,30 +118,33 @@ export default function StripeSubscriptionForm({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col xs:flex-row gap-2 xs:gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
           <Button
             onClick={onBack}
             variant="outline"
-            className="flex-1 border-[#6B7280] text-[#6B7280] hover:border-[#F5B301] hover:text-[#F5B301] hover:border-2 transition-all duration-100 ease-out text-sm xs:text-base px-2 xs:px-4"
+            className="flex-1 border-[#6B7280] text-[#6B7280] hover:border-[#F5B301] hover:text-[#F5B301] hover:border-2 transition-all duration-100 ease-out text-sm sm:text-base"
             disabled={isProcessing}
           >
-            <span className="text-sm font-medium">Back</span>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
           </Button>
           <Button
             onClick={onSubscription}
             disabled={isProcessing}
-            className="flex-1 bg-[#635BFF] text-white hover:bg-[#5A52E5] disabled:opacity-50 transition-all duration-100 ease-out text-sm xs:text-base px-2 xs:px-4"
+            className="flex-1 bg-[#635BFF] text-white hover:bg-[#5A52E5] disabled:opacity-50 transition-all duration-100 ease-out text-sm sm:text-base"
           >
             {isProcessing ? (
-              <div className="flex items-center space-x-1 xs:space-x-2">
-                <div className="w-3 h-3 xs:w-4 xs:h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span className="text-xs xs:text-sm">Redirecting...</span>
+              <div className="flex items-center space-x-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Redirecting...</span>
               </div>
             ) : (
               <>
-                <CreditCard className="h-3 w-3 xs:h-4 xs:w-4 mr-1 xs:mr-2" />
-                <span className="hidden xs:inline">Subscribe with Stripe</span>
-                <span className="xs:hidden">Stripe</span>
+                <CreditCard className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">
+                  Pay ${amount.toFixed(2)} with Stripe
+                </span>
+                <span className="sm:hidden">Pay ${amount.toFixed(2)}</span>
               </>
             )}
           </Button>

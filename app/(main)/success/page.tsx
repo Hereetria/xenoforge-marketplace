@@ -44,25 +44,40 @@ function SuccessPageContent() {
           "Subscription payment completed, refreshing subscription status..."
         );
         setIsSubscription(true);
+        // Subscription refresh edilirken daha uzun loading göster
         await refreshSubscription();
+        // Subscription refresh tamamlandıktan sonra biraz daha bekle
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
 
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 1500);
+      const timer = setTimeout(
+        () => {
+          setIsLoading(false);
+        },
+        isSubscription ? 2000 : 1500
+      );
 
       return () => clearTimeout(timer);
     };
 
     initializeSuccess();
-  }, []);
+  }, [clearCart, refreshSubscription, searchParams]);
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#1C1F2A] to-[#2A2D3A] flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-[#F5B301] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Processing your payment...</p>
+          <p className="text-white text-lg">
+            {isSubscription
+              ? "Activating your premium subscription..."
+              : "Processing your payment..."}
+          </p>
+          {isSubscription && (
+            <p className="text-[#6B7280] text-sm mt-2">
+              Please wait while we update your account...
+            </p>
+          )}
         </div>
       </div>
     );

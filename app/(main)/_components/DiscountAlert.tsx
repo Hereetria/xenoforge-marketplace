@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { X, Clock, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -46,7 +46,7 @@ export default function DiscountAlert() {
     return { days, hours, minutes };
   };
 
-  const loadDiscountTimer = (): DiscountTimer | null => {
+  const loadDiscountTimer = useCallback((): DiscountTimer | null => {
     if (typeof window === "undefined") return null;
 
     try {
@@ -72,7 +72,7 @@ export default function DiscountAlert() {
     }
 
     return null;
-  };
+  }, []);
 
   const saveDiscountTimer = (timer: DiscountTimer) => {
     if (typeof window === "undefined") return;
@@ -135,7 +135,7 @@ export default function DiscountAlert() {
     }, 60000);
 
     return () => clearInterval(timer);
-  }, [isVisible, isDiscountEnabled]);
+  }, [isVisible, isDiscountEnabled, loadDiscountTimer]);
 
   const handleClose = () => {
     setIsVisible(false);

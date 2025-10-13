@@ -8,7 +8,7 @@ import { RouteContext } from "@/types/routeTypes";
 import { Role } from "@/lib/constants/roles";
 import { requireRole } from "@/lib/auth/requireRole";
 
-export async function POST(req: NextRequest, context: RouteContext) {
+export async function POST(_req: NextRequest, context: RouteContext) {
   try {
     const { user } = await requireAuth();
     requireRole(user.role, [Role.USER, Role.ADMIN]);
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest, context: RouteContext) {
 
     const progress = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
 
-    const updatedEnrollment = await prisma.enrollment.update({
+    await prisma.enrollment.update({
       where: { id: enrollment.id },
       data: {
         progress,

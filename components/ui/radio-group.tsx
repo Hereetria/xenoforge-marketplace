@@ -10,7 +10,7 @@ interface RadioGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
-  ({ className, value, onValueChange, ...props }, ref) => {
+  ({ className, ...props }, ref) => {
     return (
       <div
         ref={ref}

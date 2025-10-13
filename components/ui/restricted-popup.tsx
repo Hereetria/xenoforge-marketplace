@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { X } from "lucide-react";
 
 interface RestrictedPopupProps {
@@ -28,13 +28,14 @@ export default function RestrictedPopup({
       return () => clearTimeout(timer);
     } else {
       setShouldRender(false);
+      return undefined;
     }
   }, [isVisible, onClose]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setShouldRender(false);
     setTimeout(() => onClose(), 150);
-  };
+  }, [onClose]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,7 +59,7 @@ export default function RestrictedPopup({
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [isVisible]);
+  }, [isVisible, handleClose]);
 
   if (!shouldRender) return null;
 

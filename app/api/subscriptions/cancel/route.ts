@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
 import prisma from "@/lib/prisma";
-import { getEnvVar } from "@/lib/getEnvVar";
 import { getStripe } from "@/lib/stripe";
 import { handleError } from "@/lib/errors/errorHandler";
 import { Role } from "@/lib/constants/roles";

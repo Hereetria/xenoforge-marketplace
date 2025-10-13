@@ -19,7 +19,7 @@ interface MobileUserMenuProps {
   onLinkClick: () => void;
 }
 
-export default function MobileUserMenu({ user, onLinkClick }: MobileUserMenuProps) {
+export default function MobileUserMenu({ user }: MobileUserMenuProps) {
   const { hasActiveSubscription, isLoading: subscriptionLoading } =
     useSubscription();
 

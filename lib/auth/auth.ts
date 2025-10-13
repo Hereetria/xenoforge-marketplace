@@ -1,7 +1,5 @@
-import { Session, User, type NextAuthOptions } from "next-auth";
+import { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
-import { JWT } from "next-auth/jwt";
 import prisma from "@/lib/prisma";
 import { compare } from "bcryptjs"
 import { Role, fromPrismaRole } from "@/lib/constants/roles";
@@ -69,8 +67,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
-    async signIn({ user, account, profile, email, credentials }) {
-
+    async signIn() {
       return true
     },
   },

@@ -71,7 +71,6 @@ export default function FeaturedCourses() {
                   (e: { courseId: string }) => e.courseId
                 ) || [];
 
-              const beforeFilter = allCourses.length;
               allCourses = allCourses.filter((course: Course) => {
                 const courseId = course.id.toString();
                 const isEnrolled = enrolledCourseIds.includes(courseId);

@@ -33,7 +33,7 @@ export default function PremiumCheckoutClient() {
   const [isLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const { hasActiveSubscription, isLoading: subscriptionLoading } =
     useSubscription();
   const router = useRouter();
@@ -158,6 +158,7 @@ export default function PremiumCheckoutClient() {
             {currentStep === 2 && selectedPaymentMethod === "stripe" && (
               <div className="sticky top-17 sm:top-17 lg:top-17 transition-all duration-500 ease-in-out">
                 <StripeSubscriptionForm
+                  amount={29}
                   isProcessing={isProcessing}
                   onBack={handleStepBack}
                   onSubscription={handleStripeSubscription}

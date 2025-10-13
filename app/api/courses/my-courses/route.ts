@@ -1,9 +1,8 @@
-import { NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth/requireAuth";
 import { handleError } from "@/lib/errors/errorHandler";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Get authenticated user
     const { user } = await requireAuth();

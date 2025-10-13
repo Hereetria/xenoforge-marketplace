@@ -40,7 +40,7 @@ export default function CouponInput({
 
       const result = await response.json();
       onCouponApplied(result);
-    } catch (error) {
+    } catch {
       onCouponApplied({ valid: false, message: "Failed to validate coupon" });
     } finally {
       setLoading(false);

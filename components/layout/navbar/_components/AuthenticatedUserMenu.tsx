@@ -36,22 +36,24 @@ export default function AuthenticatedUserMenu({ user }: AuthenticatedUserMenuPro
   return (
     <div className="flex items-center space-x-2 lg:space-x-6">
       {/* Premium Button */}
-      {hasActiveSubscription ? (
-        <Link
-          href="/all-courses"
-          className="flex items-center gap-1.5 bg-gradient-to-r from-green-500 to-green-600 text-white px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 text-xs lg:text-sm shadow-lg"
-        >
-          <BookOpen className="h-3 w-3 lg:h-4 lg:w-4" />
-          <span className="hidden sm:inline">All Courses</span>
-        </Link>
-      ) : (
-        <PremiumDialog>
-          <button className="flex items-center gap-1.5 bg-gradient-to-r from-[#F5B301] to-[#FFD700] text-[#1C1F2A] px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg font-bold hover:from-[#FFF9E6] hover:to-[#F5B301] transition-all duration-200 text-xs lg:text-sm shadow-lg cursor-pointer">
-            <Crown className="h-3 w-3 lg:h-4 lg:w-4" />
-            <span className="hidden sm:inline">Premium</span>
-          </button>
-        </PremiumDialog>
-      )}
+      <div className="transition-all duration-500 ease-in-out">
+        {hasActiveSubscription ? (
+          <Link
+            href="/all-courses"
+            className="flex items-center gap-1.5 bg-gradient-to-r from-green-500 to-green-600 text-white px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg font-bold hover:from-green-600 hover:to-green-700 transition-all duration-500 text-xs lg:text-sm shadow-lg animate-in fade-in-0 slide-in-from-right-2"
+          >
+            <BookOpen className="h-3 w-3 lg:h-4 lg:w-4" />
+            <span className="hidden sm:inline">All Courses</span>
+          </Link>
+        ) : (
+          <PremiumDialog>
+            <button className="flex items-center gap-1.5 bg-gradient-to-r from-[#F5B301] to-[#FFD700] text-[#1C1F2A] px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg font-bold hover:from-[#FFF9E6] hover:to-[#F5B301] transition-all duration-500 text-xs lg:text-sm shadow-lg cursor-pointer">
+              <Crown className="h-3 w-3 lg:h-4 lg:w-4" />
+              <span className="hidden sm:inline">Premium</span>
+            </button>
+          </PremiumDialog>
+        )}
+      </div>
 
       {/* Shopping Cart Icon */}
       <Link

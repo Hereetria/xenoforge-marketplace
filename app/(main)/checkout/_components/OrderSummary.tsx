@@ -15,13 +15,6 @@ import {
 } from "lucide-react";
 import { getPriceInfo } from "@/lib/discountUtils";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 
 export interface OrderItem {
   id: number | string;
@@ -37,7 +30,6 @@ export interface OrderItem {
 
 interface OrderSummaryProps {
   items: OrderItem[];
-  subtotal: number;
   originalSubtotal: number;
   discountAmount: number;
   discountInfo?: {
@@ -45,7 +37,6 @@ interface OrderSummaryProps {
     code: string;
     percentage: number;
   } | null;
-  taxAmount: number;
   totalPrice: number;
   appliedCoupon?: { code: string; discountPercentage: number } | null;
   onCouponApplied?: (
@@ -55,11 +46,9 @@ interface OrderSummaryProps {
 
 export default function OrderSummary({
   items,
-  subtotal,
   originalSubtotal,
   discountAmount,
   discountInfo,
-  taxAmount,
   totalPrice,
   appliedCoupon,
   onCouponApplied,

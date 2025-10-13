@@ -131,7 +131,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
             },
           });
 
-          const subscriptionRecord = await prisma.subscription.create({
+          await prisma.subscription.create({
             data: {
               paymentId: paymentRecord.id,
               currentPeriodStart: new Date(), 
@@ -235,7 +235,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         });
         
         if (!existingEnrollment) {
-          const enrollment = await prisma.enrollment.create({
+          await prisma.enrollment.create({
             data: {
               userId: buyerId,
               courseId: courseId,

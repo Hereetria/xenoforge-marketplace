@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import prisma from "@/lib/prisma";
-import { getEnvVar } from "@/lib/getEnvVar";
 import { getStripe } from "@/lib/stripe";
 import { handleError } from "@/lib/errors/errorHandler";
 import { Role } from "@/lib/constants/roles";
@@ -12,7 +11,7 @@ import { requireRole } from "@/lib/auth/requireRole";
 
 const stripe = getStripe();
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
         const { user } = await requireAuth();
         requireRole(user.role, [Role.USER]);

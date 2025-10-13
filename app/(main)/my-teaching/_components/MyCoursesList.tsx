@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -55,7 +55,7 @@ export default function MyCoursesList() {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
-  const fetchCourses = async () => {
+  const fetchCourses = useCallback(async () => {
     try {
       console.log("Starting to fetch courses...");
 
@@ -119,13 +119,13 @@ export default function MyCoursesList() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [status, session]);
 
   useEffect(() => {
     if (status !== "loading") {
       fetchCourses();
     }
-  }, [status, session]);
+  }, [status, session, fetchCourses]);
 
   useEffect(() => {
     const handleCourseCreated = () => {
@@ -134,7 +134,7 @@ export default function MyCoursesList() {
 
     window.addEventListener("courseCreated", handleCourseCreated);
     return () => window.removeEventListener("courseCreated", handleCourseCreated);
-  }, []);
+  }, [fetchCourses]);
 
   const formatDuration = (minutes: number) => {
     const hours = minutes / 60;

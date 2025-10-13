@@ -5,7 +5,7 @@ interface UserInfoProps {
   role: Role;
 }
 
-export default function UserInfo({ name, role }: UserInfoProps) {
+export default function UserInfo({ name }: UserInfoProps) {
   return (
     <div className="text-right min-w-0 flex items-center">
       <p className="text-white text-xs sm:text-sm font-medium truncate">
