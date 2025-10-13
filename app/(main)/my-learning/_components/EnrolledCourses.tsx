@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Trophy, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 import EnrolledCourseDetailsDialog from "./EnrolledCourseDetailsDialog";
 import LearningProgressDialog from "./LearningProgressDialog";
 import CourseRatingDialog from "./CourseRatingDialog";
@@ -237,9 +238,11 @@ export default function EnrolledCourses() {
                       <div className="flex-shrink-0">
                         <div className="w-16 h-12 sm:w-24 sm:h-16 bg-[#6B7280] rounded-lg flex items-center justify-center overflow-hidden">
                           {course.thumbnail ? (
-                            <img
+                            <Image
                               src={course.thumbnail}
                               alt={course.title}
+                              width={96}
+                              height={64}
                               className="w-full h-full object-cover"
                             />
                           ) : (

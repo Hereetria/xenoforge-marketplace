@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
         });
       }
     } catch {
+      // Ignore validation errors
     }
 
     return NextResponse.json({

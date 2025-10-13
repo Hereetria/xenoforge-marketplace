@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 import {
   BookOpen,
@@ -185,7 +186,7 @@ export default function OrderSummary({
               item.originalPrice > item.price;
             const displayDiscount = hasExplicitOriginal
               ? {
-                  originalPrice: item.originalPrice!,
+                  originalPrice: item.originalPrice || item.price,
                   discountedPrice: item.price,
                   showDiscount: true,
                 }
@@ -201,9 +202,11 @@ export default function OrderSummary({
               >
                 <div className="w-12 h-12 bg-[#6B7280] rounded-lg flex items-center justify-center flex-shrink-0">
                   {item.thumbnail && item.thumbnail.startsWith("http") ? (
-                    <img
+                    <Image
                       src={item.thumbnail}
                       alt={item.title}
+                      width={48}
+                      height={48}
                       className="w-full h-full object-cover rounded-lg"
                     />
                   ) : (

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import axios from "axios";
+import toast from "react-hot-toast";
 import PremiumCheckoutHeader from "./PremiumCheckoutHeader";
 import PremiumCheckoutProgress from "./PremiumCheckoutProgress";
 import PremiumOrderSummary from "./PremiumOrderSummary";
@@ -91,17 +92,15 @@ export default function PremiumCheckoutClient() {
       if (data.url) {
         window.location.href = data.url;
       } else if (data.hasActiveSubscription) {
-        alert(
+        toast.error(
           data.error ||
             "You already have an active subscription. Please cancel your current subscription before subscribing again."
         );
       } else {
-        console.error("Missing Stripe session URL:", data);
-        alert(data.error || "Failed to start subscription session.");
+        toast.error(data.error || "Failed to start subscription session.");
       }
-    } catch (error) {
-      console.error("Stripe subscription error:", error);
-      alert("Subscription failed. Please try again.");
+    } catch {
+      toast.error("Subscription failed. Please try again.");
     } finally {
       setIsProcessing(false);
     }

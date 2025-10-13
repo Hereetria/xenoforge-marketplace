@@ -35,7 +35,9 @@ function SuccessPageContent() {
             }
           }
           keys.forEach((k) => localStorage.removeItem(k));
-        } catch {}
+        } catch {
+          // Ignore localStorage errors
+        }
         clearCart();
       }
 

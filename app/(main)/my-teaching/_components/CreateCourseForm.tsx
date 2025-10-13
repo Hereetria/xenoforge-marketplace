@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCourseSchema } from "@/lib/validation/schemas";
+import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -83,7 +84,7 @@ export default function CreateCourseForm() {
 
         // Handle specific error cases
         if (errorData.code === "USER_NOT_SYNCED") {
-          alert(
+          toast.error(
             "You need to register an account first. Redirecting to signup page..."
           );
           window.location.href = "/auth/signup";
@@ -93,16 +94,14 @@ export default function CreateCourseForm() {
         throw new Error(errorData.error || "Failed to create course");
       }
 
-      const course = await response.json();
-      console.log("Course created:", course);
-      alert("Course created successfully!");
+      await response.json();
+      toast.success("Course created successfully!");
       form.reset();
 
       // Dispatch event to refresh courses list
       window.dispatchEvent(new CustomEvent("courseCreated"));
-    } catch (error) {
-      console.error("Error creating course:", error);
-      alert("Error creating course. Please try again.");
+    } catch {
+      toast.error("Error creating course. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

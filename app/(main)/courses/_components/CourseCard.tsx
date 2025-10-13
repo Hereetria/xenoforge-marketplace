@@ -6,6 +6,7 @@ import { ShoppingCart, CreditCard } from "lucide-react";
 import { useShoppingCart } from "@/contexts/ShoppingCartContext";
 import { getPriceInfo } from "@/lib/discountUtils";
 import CourseDetailsDialog from "./CourseDetailsDialog";
+import Image from "next/image";
 
 const getLevelDisplay = (level: string): string => {
   switch (level) {
@@ -94,9 +95,11 @@ export default function CourseCard({ course }: CourseCardProps) {
       <div className="relative">
         <div className="w-full h-40 sm:h-48 bg-[#6B7280] flex items-center justify-center overflow-hidden">
           {course.thumbnail && course.thumbnail.startsWith("http") ? (
-            <img
+            <Image
               src={course.thumbnail}
               alt={course.title}
+              width={300}
+              height={200}
               className="w-full h-full object-cover"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;

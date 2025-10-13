@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -124,9 +125,11 @@ export default function EnrolledCourseDetailsDialog({
           <div className="relative">
             <div className="w-full h-48 bg-[#2A2D3A] rounded-lg flex items-center justify-center overflow-hidden">
               {course.thumbnail ? (
-                <img
+                <Image
                   src={course.thumbnail}
                   alt={course.title}
+                  width={300}
+                  height={200}
                   className="w-full h-full object-cover"
                 />
               ) : (

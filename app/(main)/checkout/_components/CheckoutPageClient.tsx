@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 import CheckoutHeader from "./CheckoutHeader";
 import CheckoutProgress from "./CheckoutProgress";
 import OrderSummary, { OrderItem } from "./OrderSummary";
@@ -136,12 +137,10 @@ export default function CheckoutPageClient() {
       if (response.data?.url) {
         window.location.href = response.data.url;
       } else {
-        console.error("Missing Stripe session URL:", response.data);
-        alert("Failed to start checkout session.");
+        toast.error("Failed to start checkout session.");
       }
-    } catch (error: unknown) {
-      console.error(error);
-      alert("Payment failed. Please try again.");
+    } catch {
+      toast.error("Payment failed. Please try again.");
     } finally {
       setIsProcessing(false);
     }

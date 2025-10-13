@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { getPriceInfo } from "@/lib/discountUtils";
+import Image from "next/image";
 
 const getLevelDisplay = (level: string): string => {
   switch (level) {
@@ -185,9 +186,11 @@ export default function FeaturedCourses() {
               >
                 <div className="aspect-video bg-[#6B7280] relative">
                   {course.thumbnail ? (
-                    <img
+                    <Image
                       src={course.thumbnail}
                       alt={course.title}
+                      width={400}
+                      height={225}
                       className="w-full h-full object-cover"
                     />
                   ) : (

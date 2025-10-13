@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface Course {
   id: string;
@@ -72,8 +73,7 @@ export default function AllCoursesClient() {
       } else {
         toast.error("Failed to fetch courses");
       }
-    } catch (error) {
-      console.error("Error fetching courses:", error);
+    } catch {
       toast.error("Failed to fetch courses");
     } finally {
       setIsLoading(false);
@@ -135,8 +135,7 @@ export default function AllCoursesClient() {
         const errorData = await response.json();
         toast.error(errorData.error || "Failed to enroll in course");
       }
-    } catch (error) {
-      console.error("Enrollment error:", error);
+    } catch {
       toast.error("Failed to enroll in course");
     } finally {
       setEnrollingCourseId(null);
@@ -303,9 +302,11 @@ export default function AllCoursesClient() {
                 >
                   {course.thumbnail && course.thumbnail.startsWith("http") ? (
                     <>
-                      <img
+                      <Image
                         src={course.thumbnail}
                         alt={course.title}
+                        width={300}
+                        height={200}
                         className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
                         onError={(e) => {
                           e.currentTarget.style.display = "none";

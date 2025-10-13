@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -243,9 +244,11 @@ export default function LearningProgressDialog({
             <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
               <div className="w-12 h-9 sm:w-16 sm:h-12 bg-[#6B7280] rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
                 {course.thumbnail ? (
-                  <img
+                  <Image
                     src={course.thumbnail}
                     alt={course.title}
+                    width={80}
+                    height={60}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -441,7 +444,7 @@ export default function LearningProgressDialog({
           </div>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .slider {
             -webkit-appearance: none;
             appearance: none;

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/themed-card";
 import { Trash2 } from "lucide-react";
 import { isDiscountEnabled } from "@/lib/discountUtils";
+import Image from "next/image";
 
 export interface CartItemData {
   id: string | number;
@@ -44,9 +45,11 @@ export default function CartItemCard({ item, onRemove }: CartItemCardProps) {
       <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
         <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#6B7280] rounded-lg flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0 hover:bg-[#F5B301] transition-colors duration-100 ease-out">
           {item.thumbnail && item.thumbnail.startsWith("http") ? (
-            <img
+            <Image
               src={item.thumbnail}
               alt={item.title}
+              width={80}
+              height={80}
               className="w-full h-full object-cover rounded-lg"
             />
           ) : (

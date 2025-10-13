@@ -74,5 +74,5 @@ export const getTestCardById = (id: string): TestCard | undefined => {
 };
 
 export const getSuccessCard = (): TestCard => {
-  return TEST_CARDS.find(card => card.id === 'visa-success')!;
+  return TEST_CARDS.find(card => card.id === 'visa-success') || TEST_CARDS[0];
 };

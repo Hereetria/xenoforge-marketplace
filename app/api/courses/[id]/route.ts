@@ -91,7 +91,7 @@ export async function GET(_req: NextRequest, context: RouteContext) {
         };
       }
     } catch {
-
+      // Ignore enrollment fetch errors
     }
 
     return NextResponse.json({

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { getPriceInfo } from "@/lib/discountUtils";
+import Image from "next/image";
 
 interface ApiCourse {
   id: string;
@@ -121,9 +122,11 @@ export default function RecommendedCourses() {
                 <div className="flex-shrink-0">
                   <div className="w-12 h-10 sm:w-16 sm:h-12 bg-[#6B7280] rounded-lg flex items-center justify-center overflow-hidden">
                     {course.thumbnail ? (
-                      <img
+                      <Image
                         src={course.thumbnail}
                         alt={course.title}
+                        width={64}
+                        height={48}
                         className="w-full h-full object-cover"
                       />
                     ) : (

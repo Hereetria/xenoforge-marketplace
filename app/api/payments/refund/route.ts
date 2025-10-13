@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const { user } = await requireAuth();
     const body = await req.json();
 
-    const { provider, paymentIntentId, amount, currency, reason } = validate(createRefundSchema, body);;
+    const { provider, paymentIntentId, amount, currency, reason } = validate(createRefundSchema, body);
 
     let refundResult;
 

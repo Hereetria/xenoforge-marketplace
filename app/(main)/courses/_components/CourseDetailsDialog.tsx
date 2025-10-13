@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -135,9 +136,11 @@ export default function CourseDetailsDialog({
             <div className="relative">
               <div className="w-full h-48 sm:h-64 lg:h-80 bg-[#6B7280] rounded-lg flex items-center justify-center overflow-hidden">
                 {course.thumbnail && course.thumbnail.startsWith("http") ? (
-                  <img
+                  <Image
                     src={course.thumbnail}
                     alt={course.title}
+                    width={400}
+                    height={300}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;

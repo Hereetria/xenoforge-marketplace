@@ -103,11 +103,11 @@ export default function DiscountAlert() {
 
     const showTimer = setTimeout(() => {
       setIsVisible(true);
-      setTimeLeft(calculateTimeLeft(timer!.endTime));
+      setTimeLeft(calculateTimeLeft(timer?.endTime || Date.now()));
     }, 1000);
 
     return () => clearTimeout(showTimer);
-  }, [isDiscountEnabled]);
+  }, [isDiscountEnabled, loadDiscountTimer]);
 
   useEffect(() => {
     if (!isVisible || !isDiscountEnabled) return;

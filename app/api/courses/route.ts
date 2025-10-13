@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
       });
       enrolledCourseIds = enrollments.map(e => e.courseId);
     } catch {
-      
+      // Ignore enrollment fetch errors
     }
 
     const where: Record<string, unknown> = {

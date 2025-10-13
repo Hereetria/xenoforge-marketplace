@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Edit, BarChart2, Eye, EyeOff } from "lucide-react";
 import RestrictedPopup from "@/components/ui/restricted-popup";
+import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface Course {
   id: string;
@@ -94,8 +96,7 @@ export default function MyCoursesList() {
           console.error("Error response data:", errorData);
 
           if (errorData.code === "USER_NOT_SYNCED") {
-            console.error("User not synced with database - user needs to register");
-            alert(
+            toast.error(
               "You need to register an account first. Redirecting to signup page..."
             );
             window.location.href = "/auth/signup";
@@ -104,12 +105,6 @@ export default function MyCoursesList() {
         } catch (jsonError) {
           console.error("Failed to parse error response as JSON:", jsonError);
         }
-
-        console.error("Failed to fetch courses:", {
-          status: response.status,
-          statusText: response.statusText,
-          error: errorData,
-        });
 
         setCourses([]);
       }
@@ -220,9 +215,11 @@ export default function MyCoursesList() {
                     {/* Thumbnail */}
                     <div className="w-full sm:w-24 h-32 sm:h-16 bg-[#3A3D4A] rounded-lg overflow-hidden flex-shrink-0">
                       {course.thumbnail ? (
-                        <img
+                        <Image
                           src={course.thumbnail}
                           alt={course.title}
+                          width={96}
+                          height={64}
                           className="w-full h-full object-cover"
                         />
                       ) : (
