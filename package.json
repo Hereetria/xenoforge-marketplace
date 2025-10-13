@@ -12,8 +12,8 @@
     "check-all": "pnpm type-check && pnpm lint",
     "pre-commit": "pnpm check-all",
     "setup-husky": "node scripts/setup-husky.js",
-    "postinstall": "husky init || true",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -39,6 +39,7 @@
     "react-hot-toast": "^2.6.0",
     "stripe": "^19.1.0",
     "tailwind-merge": "^3.3.1",
+    "xenoforge-marketplace": "link:",
     "zod": "^4.1.12"
   },
   "devDependencies": {
