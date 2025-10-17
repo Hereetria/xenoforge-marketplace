@@ -17,8 +17,6 @@ Users can create and sell their own courses, explore content from others, and se
 
 ## ✨ Features
 
----
-
 ### 👥 User Experience & Profiles
 - User profiles with enrolled and purchased courses  
 - Track learning progress, view course history  
