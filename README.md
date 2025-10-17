@@ -80,7 +80,7 @@ Shown below in order:
 **7. Checkout** · **8. Stripe Checkout** · **9. All Courses**<br>
 
 <p align="center">
-  <img src="./public/screenshots/home.png" width="32%">
+  <img src="./public/screenshots/landing.png" width="32%">
   <img src="./public/screenshots/my-learning.png" width="32%">
   <img src="./public/screenshots/courses.png" width="32%">
 </p>
@@ -88,7 +88,7 @@ Shown below in order:
 <p align="center">
   <img src="./public/screenshots/my-teaching.png" width="32%">
   <img src="./public/screenshots/payment-history.png" width="32%">
-  <img src="./public/screenshots/cart.png" width="32%">
+  <img src="./public/screenshots/shopping-cart.png" width="32%">
 </p>
 
 <p align="center">
