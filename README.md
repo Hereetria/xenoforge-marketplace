@@ -77,7 +77,7 @@ Users can create and sell their own courses, explore content from others, and se
 Shown below in order:  
 **1. Landing** · **2. My Learning** · **3. Courses**<br>
 **4. My Teaching** · **5. Payment History** · **6. Cart**<br>
-**7. Checkout** · **5. Stripe Checkout** · **6. All Courses**<br>
+**7. Checkout** · **8. Stripe Checkout** · **9. All Courses**<br>
 
 <p align="center">
   <img src="./public/screenshots/home.png" width="32%">
