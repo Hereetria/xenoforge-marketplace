@@ -1,4 +1,4 @@
-# ⚙️ Xenoforge Marketplace — Modern Learning Platform
+# ⚙️ XenoForge Marketplace — Modern Learning Platform
 
 <br>
 
