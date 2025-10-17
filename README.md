@@ -17,18 +17,21 @@ Users can create and sell their own courses, explore content from others, and se
 
 ## ✨ Features
 
-### 🧑‍🏫 Course Creation & Management
-- Instructors can create, edit, and publish courses  
-- Upload thumbnails, titles, pricing, and detailed descriptions  
-- Manage lessons, categories, and course visibility  
-- Draft and publish modes for better workflow
-
 ---
 
 ### 👥 User Experience & Profiles
 - User profiles with enrolled and purchased courses  
 - Track learning progress, view course history  
 - Clean, intuitive navigation across learning and instructor areas
+- Smart, performant search to find other instructors’ courses quickly  
+
+---
+
+### 🛠️ Course Creation & Management
+- Instructors can create, edit, and publish courses  
+- Upload thumbnails, titles, pricing, and detailed descriptions  
+- Manage lessons, categories, and course visibility  
+- Draft and publish modes for better workflow
 
 ---
 
