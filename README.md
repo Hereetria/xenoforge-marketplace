@@ -71,7 +71,7 @@ Users can create and sell their own courses, explore content from others, and se
 - Modular architecture with reusable components  
 - AI-assisted development on **Cursor** platform
 
----
+<br>
 
 ## 🖼️ Screenshots
 
